@@ -27,7 +27,7 @@ async def upload_image(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=str(e))
 
 # Маршрут для загрузки изображения и получения эмбеддингов
-@app.post("/face_embedding/")
+@router.post("/face_embedding/")
 async def get_embedding(file: UploadFile = File(...)):
     try:
         # Открываем изображение и конвертируем его в формат, пригодный для обработки
