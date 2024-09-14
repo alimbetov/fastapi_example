@@ -7,6 +7,6 @@ app = FastAPI()
 # Подключаем роутеры
 app.include_router(router)
 
-@app.get("/")
+@router.get("/")
 async def root():
     return {"message": "Welcome to FastAPI ImageProcess Application"}
