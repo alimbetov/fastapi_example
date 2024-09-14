@@ -30,6 +30,41 @@ This project is a FastAPI-based web service designed for image processing tasks,
    - **Request**: Pass the name as a path parameter.
    - **Response**: Returns a greeting message.
 
+#### POST /detect_faces/
+Загружает изображение и обнаруживает лица на основе указанного типа классификатора.
+**Параметры запроса:**
+- `file`: Файл изображения (формат: JPEG, PNG и т.д.)
+- `classifier_type`: Тип классификатора для обнаружения лиц. Варианты:
+  - `eye`
+  - `eyeglasses`
+  - `catface`
+  - `catface_extended`
+  - `frontalface_alt`
+  - `frontalface_alt2`
+  - `frontalface_alt_tree`
+  - `frontalface_default`
+  - `fullbody`
+  - `lefteye`
+  - `license_plate`
+  - `lowerbody`
+  - `profileface`
+  - `righteye`
+  - `russian_plate`
+  - `smile`
+  - `upperbody`
+
+**Ответ:**
+
+Возвращает JSON с координатами обнаруженных лиц:
+
+```json
+{
+  "faces": [
+    [x, y, w, h],  // координаты первого лица
+    [x, y, w, h]   // координаты второго лица
+  ]
+}
+
 ## Installation
 
 To install the required dependencies, create a `requirements.txt` file with the following contents:
