@@ -1,7 +1,6 @@
 # app/controllers.py
-
 from fastapi import APIRouter, UploadFile, File, HTTPException
-from app.image_processing import process_image
+from app.image_processing import process_image, get_face_embedding
 import shutil
 import os
 
@@ -13,7 +12,7 @@ UPLOAD_DIRECTORY = "uploaded_images/"  # Директория для хране�
 if not os.path.exists(UPLOAD_DIRECTORY):
     os.makedirs(UPLOAD_DIRECTORY)
 
-@router.post("/upload_image/")
+@router.post("/img-ocr/")
 async def upload_image(file: UploadFile = File(...)):
     try:
         # Сохраняем загруженный файл в директорию
@@ -27,7 +26,27 @@ async def upload_image(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# Маршрут для загрузки изображения и получения эмбеддингов
+@app.post("/face_embedding/")
+async def get_embedding(file: UploadFile = File(...)):
+    try:
+        # Открываем изображение и конвертируем его в формат, пригодный для обработки
+        image = Image.open(io.BytesIO(await file.read()))
+        image = np.array(image)
 
+        # Проверяем, является ли файл изображением
+        if not image.shape or len(image.shape) != 3: 
+            raise HTTPException(status_code=400, detail="Загруженный файл не является изображением.")
+
+        # Получаем эмбеддинги
+        embedding = get_face_embedding(image)
+
+        return {"embedding": embedding}
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code = 400, detail = f"Не удалось обработать изображение: {e}")
 
 
 # Определяем эндпоинт

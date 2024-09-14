@@ -1,5 +1,4 @@
 # app/main.py
-
 from fastapi import FastAPI
 from app.controllers import router
 
@@ -10,4 +9,4 @@ app.include_router(router)
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to FastAPI Test Application"}
+    return {"message": "Welcome to FastAPI ImageProcess Application"}

@@ -1,9 +1,8 @@
-# app/image_processing.py
-
 import cv2
 import pytesseract
-from PIL import Image
 import numpy as np
+from deepface import DeepFace
+from fastapi import HTTPException
 
 # Функция обработки изображения с использованием Tesseract
 def process_image(image_path: str) -> str:
@@ -20,3 +19,12 @@ def process_image(image_path: str) -> str:
     text = pytesseract.image_to_string(blurred, config='--psm 7')
 
     return text
+
+# Функция для извлечения эмбеддингов с помощью DeepFace
+def get_face_embedding(image: np.array):
+    try:
+        # Извлекаем эмбеддинги с использованием модели Facenet
+        embedding = DeepFace.represent(img_path=image, model_name="Facenet", enforce_detection=False)[0]["embedding"]
+        return embedding
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Ошибка при получении эмбеддинга: {e}")

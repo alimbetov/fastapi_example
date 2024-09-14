@@ -1,6 +1,11 @@
 fastapi
 uvicorn
+deepface
 pytesseract
 opencv-python
 pillow
 python-multipart
+numpy
+tensorflow
+keras
+opencv-python-headless
