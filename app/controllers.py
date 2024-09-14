@@ -2,6 +2,8 @@
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from app.image_processing import process_image
+from app.services import TestService
+from app.entities.recognized_text import RecognizedText
 import shutil
 import os
 
@@ -22,8 +24,8 @@ async def upload_image(file: UploadFile = File(...)):
             shutil.copyfileobj(file.file, buffer)
 
         # Обрабатываем изображение и получаем распознанный текст
-        recognized_text = process_image(file_path)
-        return {"text": recognized_text}
+        return RecognizedText(recognized_text=process_image(file_path))
+    
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -35,4 +37,5 @@ async def upload_image(file: UploadFile = File(...)):
 async def greet_user(name: str):
     # Используем сервис для обработки бизнес-логики
     greeting = TestService.get_greeting(name)
-    return {"message": greeting}
+
+    return RecognizedText(recognized_text=greeting)
