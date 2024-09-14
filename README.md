@@ -1,22 +1,39 @@
 # FastAPI Example Project
 
-This project demonstrates a FastAPI application with Docker integration and local development setup.
+# FastAPI Image Processing Service
 
-- **`/upload_image/`** (POST): Uploads an image file and processes it. The image is saved to the `uploaded_images/` directory, and the text recognized from the image is returned.
-  
-  **Request:**
-  - `file` (form-data): The image file to be uploaded.
-  
-  **Response:**
-  - `text` (string): The text recognized from the image.
+This project is a FastAPI-based web service designed for image processing tasks, including Optical Character Recognition (OCR) and face embedding extraction.
 
-- **`/greet/{name}`** (GET): Returns a greeting message. The `name` path parameter is used to generate a personalized greeting.
-  
-  **Request:**
-  - `name` (path parameter): The name of the person to greet.
-  
-  **Response:**
-  - `message` (string): A personalized greeting message.
+## Features
+
+1. **Create Directory for Image Uploads**:
+   - Automatically creates a directory for storing uploaded images if it does not already exist.
+
+2. **OCR (Optical Character Recognition)**:
+   - **Endpoint**: `/img-ocr/`
+   - **Method**: `POST`
+   - **Description**: Upload an image to this endpoint to extract text from it using Tesseract OCR. The image is saved to a specified directory before processing.
+   - **Request**: Upload an image file.
+   - **Response**: Returns the recognized text extracted from the image.
+
+3. **Face Embedding Extraction**:
+   - **Endpoint**: `/face_embedding/`
+   - **Method**: `POST`
+   - **Description**: Upload an image to this endpoint to extract face embeddings using DeepFace. The image is processed directly from the file upload.
+   - **Request**: Upload an image file.
+   - **Response**: Returns the face embedding vector of the uploaded image.
+
+4. **Greeting Endpoint**:
+   - **Endpoint**: `/greet/{name}`
+   - **Method**: `GET`
+   - **Description**: Provides a greeting message for the provided name.
+   - **Request**: Pass the name as a path parameter.
+   - **Response**: Returns a greeting message.
+
+## Installation
+
+To install the required dependencies, create a `requirements.txt` file with the following contents:
+
 
 ## Project Structure
 fastapi_example/
