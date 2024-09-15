@@ -1,3 +1,4 @@
+# app/image_processing.py
 import cv2
 import pytesseract
 import numpy as np

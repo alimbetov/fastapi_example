@@ -1,6 +1,6 @@
 # app/main.py
 from fastapi import FastAPI
-from app.controllers import router
+from .controllers import router
 
 app = FastAPI()
 
