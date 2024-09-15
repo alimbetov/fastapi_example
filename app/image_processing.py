@@ -20,11 +20,15 @@ def process_image(image_path: str) -> str:
 
     return text
 
-# Функция для извлечения эмбеддингов с помощью DeepFace
-def get_face_embedding(image: np.array):
+# Функция для извлечения эмбеддингов с использованием DeepFace
+def get_face_embedding(image: np.array, inIsDeep: bool = False, inEnforceFaceDetection: bool = False):
     try:
-        # Извлекаем эмбеддинги с использованием модели Facenet
-        embedding = DeepFace.represent(img_path=image, model_name="Facenet", enforce_detection=False)[0]["embedding"]
+        # Выбираем модель в зависимости от значения inIsDeep
+        inModelName = "Facenet512" if inIsDeep else "Facenet"
+        
+        # Преобразуем изображение в формат, поддерживаемый DeepFace
+        embedding = DeepFace.represent(img_path=image, model_name=inModelName, enforce_detection=inEnforceFaceDetection)[0]["embedding"]
+        
         return embedding
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ошибка при получении эмбеддинга: {e}")
