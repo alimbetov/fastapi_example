@@ -3,7 +3,7 @@ import hashlib
 import numpy as np
 from PIL import Image
 from fastapi import APIRouter, UploadFile, File, HTTPException
-from app.image_processing import process_image, get_face_embedding, detect_faces
+from .image_processing import process_image, get_face_embedding, detect_faces
 
 router = APIRouter()
 
